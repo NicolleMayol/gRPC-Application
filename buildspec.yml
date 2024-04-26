@@ -12,14 +12,16 @@ phases:
   pre_build:
     commands:
       # Compile proto file
-      - python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. crypto_service.proto
+      - python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./app/crypto_service.proto
 
   build:
     commands:
       # Install dependencies
-      - pip install -r requirements.txt
+      - pip install -r ./app/requirements.txt
 
   post_build:
     commands:
-      # Run the gRPC server
-      - python crypto_server.py
+      # Update client configuration file with server IP address
+      - sed -i 's/YOUR_SERVER_ADDRESS/your_server_ip_or_dns/g' crypto_client.py
+      # Run the gRPC client
+      - python ./app/crypto_client.py
