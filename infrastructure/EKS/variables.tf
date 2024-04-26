@@ -54,11 +54,6 @@ variable "subnet_ids" {
   type        = list(string)
 }
 
-variable "control_plane_subnet_ids" {
-  description = "List of subnet IDs for the control plane"
-  type        = list(string)
-}
-
 variable "security_group_id" {
   description = "ID of the security group"
 }
@@ -66,6 +61,11 @@ variable "security_group_id" {
 variable "enable_cluster_creator_admin_permissions" {
   description = "Set to true to enable cluster creator admin permissions"
   type        = bool
+}
+
+variable "public_subnet_ids" {
+  description = "List of public subnet IDs"
+  type        = list(string)
 }
 
 variable "tags" {
@@ -77,3 +77,7 @@ variable "codecommit_repo_url" {
   description = "URL of the CodeCommit repository"
 }
 
+variable "app_ingress_name" {
+  description = "Name for the application ingress"
+  type        = string
+}

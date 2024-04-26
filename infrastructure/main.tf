@@ -15,7 +15,6 @@ provider "aws" {
 # Networking Module
 module "networking" {
   source = "./networking"
-  
   vpc_cidr_block           = "10.0.0.0/16"
   public_subnet_cidr_block = "10.0.1.0/24"
   private_subnet_cidr_block = "10.0.2.0/24"
@@ -33,10 +32,11 @@ module "eks" {
   codebuild_project_name    = "eks-ci-cd"
   codebuild_role       = "codebuild-role"
   codepipeline_name         = "eks-pipeline"
-
+  app_ingress_name = "grpc-ingress"
+  
   vpc_id          = module.networking.vpc_id
-  subnet_ids      = [module.networking.public_subnet_id, module.networking.private_subnet_id]
-  control_plane_subnet_ids = [module.networking.public_subnet_id] 
+  subnet_ids      = [module.networking.public_subnet_id, module.networking.private_subnet_id] 
+  public_subnet_ids = [module.networking.public_subnet_id]
   security_group_id = module.networking.security_group_id
   enable_cluster_creator_admin_permissions = true
   tags = {
