@@ -2,3 +2,5 @@ __pycache__/*
 python_app/__pycache__/*
 aws/**_accessKeys.csv
 aws/**_credentials.csv
+*/**.terraform
+*/.terraform.lock.hcl

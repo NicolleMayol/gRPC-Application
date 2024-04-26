@@ -8,42 +8,72 @@ variable "cluster_version" {
   type        = string
 }
 
-variable "instance_type" {
-  description = "Instance type for worker nodes"
-  type        = string
+variable "instance_type"{
+  description = "Type of instance"
+  type = string
 }
 
-variable "desired_capacity" {
-  description = "Desired capacity for worker nodes"
-  type        = number
+variable "codecommit_repo_name"{
+  description = "Repository name"
+  type = string
 }
 
-variable "codecommit_repo_name" {
-  description = "Name of the CodeCommit repository"
-  type        = string
+
+ variable "pipeline_bucket_name" {
+  description = "Name of the bucket"
+  type = string
+ }      
+ 
+ variable "pipeline_bucket_prefix"{
+  description = "prefix for the bucket name"
+  type = string
+ }   
+ 
+ variable "codebuild_project_name"{
+  description = "Name of the project"
+  type = string
+ }
+
+
+ variable "codebuild_role"{
+  description = "Name of the role"
+  type = string
+ }       
+ 
+ variable "codepipeline_name" {
+  description = "Name of the pipeline"
+  type = string
+ }
+
+variable "vpc_id" {
+  description = "ID of the VPC"
 }
 
-variable "pipeline_bucket_name" {
-  description = "Name of the S3 bucket for CodePipeline artifacts"
-  type        = string
+variable "subnet_ids" {
+  description = "List of subnet IDs"
+  type        = list(string)
 }
 
-variable "pipeline_bucket_prefix" {
-  description = "Prefix for the S3 bucket for CodePipeline artifacts"
-  type        = string
+variable "control_plane_subnet_ids" {
+  description = "List of subnet IDs for the control plane"
+  type        = list(string)
 }
 
-variable "codebuild_project_name" {
-  description = "Name of the CodeBuild project"
-  type        = string
+variable "security_group_id" {
+  description = "ID of the security group"
 }
 
-variable "codebuild_role_name" {
-  description = "Name of the IAM role for CodeBuild"
-  type        = string
+variable "enable_cluster_creator_admin_permissions" {
+  description = "Set to true to enable cluster creator admin permissions"
+  type        = bool
 }
 
-variable "codepipeline_name" {
-  description = "Name of the CodePipeline"
-  type        = string
+variable "tags" {
+  description = "A map of tags"
+  type        = map(string)
 }
+
+variable "codecommit_repo_url" {
+  description = "URL of the CodeCommit repository"
+}
+
