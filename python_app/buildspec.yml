@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      # Install protoc compiler
+      - sudo apt-get update
+      - sudo apt-get install -y protobuf-compiler
+
+  pre_build:
+    commands:
+      # Compile proto file
+      - python -m grpc_tools.protoc --python_out=. --grpc_python_out=. crypto_service.proto
+
+  build:
+    commands:
+      # Install dependencies
+      - pip install -r requirements.txt
+
+  post_build:
+    commands:
+      # Run the gRPC server
+      - python crypto_server.py
