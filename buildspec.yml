@@ -1,9 +1,5 @@
 version: 0.2
 
-env:
-  variables:
-    ECR_REPOSITORY_URI: "default-value" # Default value, in case the variable is not provided by CodeBuild
-
 phases:
   pre_build:
     commands:
@@ -11,7 +7,7 @@ phases:
       - pip3 install --upgrade awscli
 
       # Login to Amazon ECR
-      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPOSITORY_URI
 
   build:
     commands:
@@ -22,3 +18,7 @@ phases:
     commands:
       # Push the Docker image to Amazon ECR
       - docker push $ECR_REPOSITORY_URI:latest
+
+    # Deploy application to EKS cluster
+    - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $CLUSTER_NAME
+    - kubectl apply -f ./app/deployment.yaml -f ./app/service.yaml
