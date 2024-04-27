@@ -8,7 +8,6 @@ phases:
   pre_build:
     commands:
       # Install AWS CLI
-      - apt-get update && apt-get install -y python3-pip
       - pip3 install --upgrade awscli
 
       # Login to Amazon ECR
