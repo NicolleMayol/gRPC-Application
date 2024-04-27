@@ -22,4 +22,4 @@ EXPOSE 50051
 RUN sed -i 's/SERVER_ADDRESS/tf-lb-2024042714334162000000000f-1707577661.us-east-1.elb.amazonaws.com/g' crypto_client.py
 
 # Run the gRPC client
-CMD ["python", "./app/crypto_client.py"]
+CMD ["python", "./app/crypto_server.py"]
