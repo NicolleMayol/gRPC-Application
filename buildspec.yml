@@ -1,27 +1,25 @@
 version: 0.2
 
-phases:
-  install:
-    runtime-versions:
-      python: 3.8
-    commands:
-      # Install protoc compiler
-      - sudo apt-get update
-      - sudo apt-get install -y protobuf-compiler
+env:
+  variables:
+    ECR_REPOSITORY_URI: "default-value" # Default value, in case the variable is not provided by CodeBuild
 
+phases:
   pre_build:
     commands:
-      # Compile proto file
-      - python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./app/crypto_service.proto
+      # Install AWS CLI
+      - apt-get update && apt-get install -y python3-pip
+      - pip3 install --upgrade awscli
+
+      # Login to Amazon ECR
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
 
   build:
     commands:
-      # Install dependencies
-      - pip install -r ./app/requirements.txt
+      # Build the Docker image
+      - docker build -t $ECR_REPOSITORY_URI:latest ./app/.dockerfile
 
   post_build:
     commands:
-      # Update client configuration file with server IP address
-      - sed -i 's/YOUR_SERVER_ADDRESS/your_server_ip_or_dns/g' crypto_client.py
-      # Run the gRPC client
-      - python ./app/crypto_client.py
+      # Push the Docker image to Amazon ECR
+      - docker push $ECR_REPOSITORY_URI:latest

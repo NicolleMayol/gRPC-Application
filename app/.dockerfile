@@ -11,8 +11,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the application code into the container
 COPY . .
 
+# Compile proto file
+COPY ./app/crypto_service.proto .
+RUN python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. crypto_service.proto
+
 # Expose port 50051
 EXPOSE 50051
 
-# Command to run the application
-CMD ["python", "app.py"]
+# Update client configuration file with server IP address
+RUN sed -i 's/SERVER_ADDRESS/tf-lb-2024042714334162000000000f-1707577661.us-east-1.elb.amazonaws.com/g' crypto_client.py
+
+# Run the gRPC client
+CMD ["python", "./app/crypto_client.py"]

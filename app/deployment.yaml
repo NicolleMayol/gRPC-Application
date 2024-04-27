@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simetrik-app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: simetrik-app
+  template:
+    metadata:
+      labels:
+        app: simetrik-app
+    spec:
+      containers:
+      - name: simetrik-app
+        image: 091179929563.dkr.ecr.us-east-1.amazonaws.com/simetrik-ecr-repository:latest
+        ports:
+        - containerPort: 50051
