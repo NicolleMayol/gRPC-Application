@@ -1,17 +1,23 @@
 version: 0.2
 
 phases:
+  pre_build:
+    commands:
+      - pip3 install --upgrade awscli
+      # Install AWS CLI
+
+      - echo "AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION"
 
   build:
     commands:
-      # Build the Docker image
       - docker build -t $ECR_REPOSITORY_URI:latest ./app/.dockerfile
+      # Build the Docker image
 
   post_build:
     commands:
-      # Push the Docker image to Amazon ECR
       - docker push $ECR_REPOSITORY_URI:latest
+      # Push the Docker image to Amazon ECR
 
-    # Deploy application to EKS cluster
-    - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $CLUSTER_NAME
-    - kubectl apply -f ./app/deployment.yaml -f ./app/service.yaml
+      - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $CLUSTER_NAME
+      - kubectl apply -f ./app/deployment.yaml -f ./app/service.yaml
+      # Deploy application to EKS cluster
