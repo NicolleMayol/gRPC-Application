@@ -10,9 +10,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the application code into the container
 COPY . .
-
-# Compile proto file
-COPY ./app/crypto_service.proto .
 RUN python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. crypto_service.proto
 
 # Expose port 50051

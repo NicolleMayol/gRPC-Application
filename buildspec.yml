@@ -9,7 +9,7 @@ phases:
   build:
     commands:
       # Build the Docker image
-      - docker build -t $ECR_REPOSITORY_URI:latest ./app/dockerfile
+      - docker build -t $ECR_REPOSITORY_URI:latest ./app
 
   post_build:
     commands:

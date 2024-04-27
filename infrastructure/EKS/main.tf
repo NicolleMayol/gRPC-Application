@@ -87,6 +87,10 @@ resource "aws_codebuild_project" "eks_ci_cd" {
       name  = "ECR_REPOSITORY_URI"
       value = var.aws_ecr_repository
     }
+    environment_variable {
+      name  = "CLUSTER_NAME"
+      value = var.cluster_name
+    }
   }
   source {
     type            = "CODECOMMIT"
@@ -117,4 +121,20 @@ resource "aws_iam_policy_attachment" "codebuild_policy_attachment" {
   name                  = "codebuild-policy-attachment"
   policy_arn            = "arn:aws:iam::aws:policy/AWSCodeBuildAdminAccess"
   roles                 = [aws_iam_role.codebuild_role.name]
+}
+
+resource "aws_iam_policy_attachment" "codebuild_eks_policy_attachment" {
+  name       = "codebuild-eks-policy-attachment"
+  roles      = [aws_iam_role.codebuild_role.name]
+
+  # Attach AmazonEKSClusterPolicy
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+}
+
+resource "aws_iam_policy_attachment" "codebuild_eks_service_policy_attachment" {
+  name       = "codebuild-eks-service-policy-attachment"
+  roles      = [aws_iam_role.codebuild_role.name]
+
+  # Attach AmazonEKSServicePolicy
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
 }
