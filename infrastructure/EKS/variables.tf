@@ -81,3 +81,9 @@ variable "app_ingress_name" {
   description = "Name for the application ingress"
   type        = string
 }
+
+variable "aws_ecr_repository" {
+  description = "ID of the ECR repository"
+  type = string
+
+}

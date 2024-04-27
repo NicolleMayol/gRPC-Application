@@ -36,6 +36,8 @@ module "app_ingress" {
   version = "~> 6.0"
   subnets = var.public_subnet_ids
   vpc_id = var.vpc_id
+
+  security_groups = [var.security_group_id]
   http_tcp_listeners = [
     {
       port               = 50051
@@ -81,6 +83,10 @@ resource "aws_codebuild_project" "eks_ci_cd" {
       name  = "S3_BUCKET"
       value = aws_s3_bucket.pipeline_bucket.bucket
     }
+    environment_variable {
+      name  = "ECR_REPOSITORY_URI"
+      value = var.aws_ecr_repository
+    }
   }
   source {
     type            = "CODECOMMIT"
@@ -88,6 +94,7 @@ resource "aws_codebuild_project" "eks_ci_cd" {
     buildspec       = "buildspec.yml"
     report_build_status = true
   }
+
 }
 
 resource "aws_iam_role" "codebuild_role" {
