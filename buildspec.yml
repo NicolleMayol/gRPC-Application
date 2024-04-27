@@ -24,7 +24,7 @@ phases:
       - kubectl config current-context
       - kubectl apply -f ./app/deployment.yaml -f ./app/service.yaml
       - kubectl get pods
-      - kubectl describe deployment simetrik-app-deployment
+      - kubectl logs simetrik-app-deployment
 
 environment:
   serviceRole: "arn:aws:iam::091179929563:role/default-eks-node-group-20240427143317397200000001"
