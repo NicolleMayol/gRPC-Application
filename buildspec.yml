@@ -21,4 +21,7 @@ phases:
 
       # Update kubeconfig and deploy application to EKS cluster
       - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $CLUSTER_NAME
+      - kubectl version
+      - kubectl config view
+      - kubectl get nodes
       - kubectl apply -f ./app/deployment.yaml -f ./app/service.yaml
