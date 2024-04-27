@@ -5,6 +5,9 @@ phases:
     commands:
       # Install AWS CLI
       - pip3 install --upgrade awscli
+      # Authenticate Docker with ECR
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+
 
   build:
     commands:
