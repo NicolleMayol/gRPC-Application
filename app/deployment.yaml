@@ -16,4 +16,4 @@ spec:
       - name: simetrik-app
         image: 091179929563.dkr.ecr.us-east-1.amazonaws.com/simetrik-ecr-repository:latest
         ports:
-        - containerPort: 50051
+        - containerPort: 50051  # Adjusted container port for gRPC

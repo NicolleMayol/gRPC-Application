@@ -6,7 +6,7 @@ spec:
   selector:
     app: simetrik-app
   ports:
-    - protocol: TCP
+    - protocol: TCP  # Specify protocol as TCP for gRPC
       port: 80
-      targetPort: 50051
+      targetPort: 50051  # Adjusted target port for gRPC
   type: LoadBalancer

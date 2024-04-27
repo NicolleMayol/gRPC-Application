@@ -21,7 +21,8 @@ phases:
 
       # Update kubeconfig and deploy application to EKS cluster
       - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $CLUSTER_NAME
-      - kubectl version
-      - kubectl config view
-      - kubectl get nodes
+      - kubectl config current-context
       - kubectl apply -f ./app/deployment.yaml -f ./app/service.yaml
+
+environment:
+  serviceRole: "arn:aws:iam::091179929563:role/default-eks-node-group-20240427143317397200000001"
