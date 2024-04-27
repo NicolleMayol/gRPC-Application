@@ -23,6 +23,8 @@ phases:
       - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $CLUSTER_NAME
       - kubectl config current-context
       - kubectl apply -f ./app/deployment.yaml -f ./app/service.yaml
+      - kubectl get pods
+      - kubectl describe deployment simetrik-app-deployment
 
 environment:
   serviceRole: "arn:aws:iam::091179929563:role/default-eks-node-group-20240427143317397200000001"
