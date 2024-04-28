@@ -21,7 +21,7 @@ module "networking" {
 }
 module "eks" {
   source            = "./eks"
-  cluster_name      = "my-cluster"
+  cluster_name      = "simetrik-cluster"
   cluster_version   = "1.23"
   instance_type     = "t3.medium"
   codecommit_repo_name      = "simetrik-test"
