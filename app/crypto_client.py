@@ -11,7 +11,7 @@ class FetchPrices:
         Establish an insecure connection to the gRPC server running on localhost at port 50051,
         and create a new gRPC stub for the GExchange service.
         """
-        server_address = os.getenv('SERVER_ADDRESS', 'localhost:50051')
+        server_address = os.getenv('SERVER_ADDRESS', 'localhost:50051') ## UPDATE THIS TO THE ALB DNS NAME
         self.channel = grpc.insecure_channel(server_address)
         self.stub = pb2_grpc.GExchangeStub(self.channel)
 

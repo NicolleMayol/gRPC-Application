@@ -43,7 +43,7 @@ module "eks" {
   }
 
   aws_ecr_repository = aws_ecr_repository.app_repository.repository_url
-  codecommit_repo_url = "https://git-codecommit.us-east-1.amazonaws.com/v1/repos/simetrik-test"
+  codecommit_repo_url = "https://git-codecommit.us-east-1.amazonaws.com/v1/repos/simetrik-test"  ## UPDATE WITH YOUR CODE COMMIT REPOSITORY
 }
 
 resource "aws_ecr_repository" "app_repository" {

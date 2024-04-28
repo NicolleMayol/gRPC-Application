@@ -1,48 +1,81 @@
-# Prueba técnica Rol de DevOps
+# Technical Test: DevOps
 
 ## Table of Contents
 
 - [About](#about)
 - [Getting Started](#getting_started)
-- [Usage](#usage)
-- [Contributing](../CONTRIBUTING.md)
+- [Infrastructure](#infrastructure) 
 
 ## About <a name = "about"></a>
 
-Write about 1-2 paragraphs describing the purpose of your project.
+ Python application leveraging gRPC (Google Remote Procedure Call) technology on Amazon EKS (Elastic Kubernetes Service) within the AWS (Amazon Web Services) cloud environment. The application utilizes gRPC for efficient communication between microservices, allowing for high-performance and language-agnostic interactions. 
+
+ The infrastructure of the application was built using terraform. It includes two modules (networking and EKS). The application is exposed through an AWS ingress, using a ALB. The application is containerized on a docker image, stored in an Amazon ECR, which is then used to create the pods within the EKS.
+
+<BR>
 
 ## Getting Started <a name = "getting_started"></a>
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
-### Prerequisites
+### Prerequisites 
 
-What things you need to install the software and how to install them.
+An AWS account with appropriate permissions to create resources.
+AWS CLI installed and configured with access keys.
+Terraform installed locally for infrastructure provisioning.
+CodeCommit repository for storing application code.
 
-```
-Give examples
-```
+### Infrastructure Setup
 
-### Installing
+1. Clone the Repository:
+````
+git clone https://github.com/NicolleMayol/gRPC-Application
+````
+2. Navigate to the Infrastructure Directory:
+````
+cd ./gRPC-Application/infrastructure
+````
 
-A step by step series of examples that tell you how to get a development env running.
+3. Update the CodeCommit repository url (found on the main.tf file) to point to your personal repository
+````
+codecommit_repo_url = "https://git-codecommit.us-east-1.amazonaws.com/v1/repos/simetrik-test"  ## UPDATE WITH YOUR CODE COMMIT REPOSITORY
+````
 
-Say what the step will be
+4. Initialize Terraform:
+````
+terraform init
+````
 
-```
-Give the example
-```
+5. Generate Terraform Plan:
+````
+terraform plan -out plan
+````
 
-And repeat
+6. Apply Terraform Plan:
+````
+terraform apply plan
+````
 
-```
-until finished
-```
+### Application Setup
 
-End with an example of getting some data out of the system or using it for a little demo.
+1. Push the application code to your CodeCommit repository
 
+2. Run the CodeBuild pipeline
 
-## Infrastructure
+### Test the application
+
+Test the application following these steps:
+
+1. Update the crypto_client.py file to point to your AWS ALB DNS NAME
+
+2. Run 
+````
+python ./app/crypto_client.py
+````
+
+<BR>
+
+## Infrastructure <a name = "infrastructure"></a>
 
 <img src='./img/diagram.jpg'>
 
@@ -77,10 +110,11 @@ Managed Kubernetes service for containerized applications.
 Acts as the entry point for incoming traffic to our application.
 Listens on port 50051 and routes traffic to the EKS cluster.
 #### CI/CD Pipeline (AWS CodeBuild):
-Automates the build and deployment process of the application to the EKS cluster.
-Integrates with the version control system (CodeCommit)
-Automates the deployment process of the infrastructure 
+* Automates the build and deployment process of the application to the EKS cluster.
+* Integrates with the version control system (CodeCommit)
+* Automates the deployment process of the infrastructure 
 
-## Usage <a name = "usage"></a>
+<BR>
 
-Add notes about how to use the system.
+## Authorship
+This project was authored by Nicolle Mayol. Contributions, issues, and feedback are welcome. Feel free to reach out to the author via email for any inquiries related to the project
